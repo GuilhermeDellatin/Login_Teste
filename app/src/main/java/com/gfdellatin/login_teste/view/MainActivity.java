@@ -12,13 +12,13 @@ import com.gfdellatin.login_teste.R;
 import com.gfdellatin.login_teste.view.fragment.ConfigFragment;
 import com.gfdellatin.login_teste.view.fragment.LoginFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IFragmentListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        direcionaTela();
+        //direcionaTela();
         /*
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
 */
+        int i = 2;
+        if (i == 2) {
+            moveFragment(new ConfigFragment());
+        }
     }
 /*
     @Override
@@ -53,10 +57,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
     }*/
-
+/*
     public void direcionaTela() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
 
         Fragment fragment = new Fragment();
         int i = 3;
@@ -71,7 +74,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("login");
         }
-        fragmentTransaction.add(R.id.main_fragment, fragment);
+
+    }*/
+
+    @Override
+    public void moveFragment(Fragment fragment) {
+
+        if (fragment instanceof ISetListener) ((ISetListener) fragment).setListener(this);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //fragmentTransaction.add(R.id.main_fragment, fragment);
+        fragmentTransaction.replace(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void moveActivity() {
+        Intent intent = new Intent(getApplicationContext(), ActivityAleatoria.class);
+        startActivity(intent);
     }
 }
